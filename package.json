@@ -1,0 +1,44 @@
+{
+	"name": "background-servers",
+	"version": "0.0.1",
+	"description": "",
+	"main": "dist/index.js",
+	"scripts": {
+		"build": "tsc",
+		"format": "prettier --write '**/*.ts'",
+		"format-check": "prettier --check '**/*.ts'",
+		"lint": "eslint src/**/*.ts",
+		"package": "ncc build --source-map --license licenses.txt",
+		"all": "npm run build && npm run format && npm run lint && npm run package",
+		"prepare": "husky install"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/maximedeoliveira/background-servers.git"
+	},
+	"author": "maximedeoliveira",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/maximedeoliveira/background-servers/issues"
+	},
+	"homepage": "https://github.com/maximedeoliveira/background-servers#readme",
+	"devDependencies": {
+		"@types/node": "^17.0.21",
+		"@typescript-eslint/parser": "^5.15.0",
+		"@vercel/ncc": "^0.33.3",
+		"eslint": "^8.11.0",
+		"eslint-plugin-github": "^4.3.5",
+		"husky": "^7.0.4",
+		"lint-staged": "^12.3.7",
+		"prettier": "^2.6.0",
+		"typescript": "^4.6.2"
+	},
+	"dependencies": {
+		"@actions/core": "^1.6.0",
+		"@actions/github": "^5.0.0"
+	},
+	"lint-staged": {
+		"*.{js,ts,json,yml}": "pnpm format",
+		"*.ts": "pnpm lint"
+	}
+}
