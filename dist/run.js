@@ -93,44 +93,28 @@ var __importDefault =
 	}
 Object.defineProperty(exports, '__esModule', { value: true })
 const execCommand_1 = __importDefault(require('./execCommand'))
-const ping_1 = __importDefault(require('./utils/ping'))
 const debug_1 = __importDefault(require('./utils/debug'))
 const core = __importStar(require('@actions/core'))
-const isUrl = (s) => /^https?:\/\//.test(s)
-function waitOnUrl(url, waitOnTimeout = 60) {
+function run() {
 	return __awaiter(this, void 0, void 0, function* () {
-		;(0,
-		debug_1.default)(`wait: waiting on "${url}" with timeout of ${waitOnTimeout} seconds`)
-		const waitTimeoutMs = waitOnTimeout * 1000
-		const waitUrls = url
-			.split(',')
-			.map((s) => s.trim())
-			.filter(Boolean)
-		;(0, debug_1.default)(`wait: Waiting for urls ${waitUrls.join(', ')}`)
-		// run every wait promise after the previous has finished
-		// to avoid "noise" of debug messages
-		return waitUrls.reduce((prevPromise, url) => {
-			return prevPromise.then(() => {
-				;(0, debug_1.default)(`wait: Waiting for url ${url}`)
-				return (0, ping_1.default)(url, waitTimeoutMs)
-			})
-		}, Promise.resolve())
-	})
-}
-function wait() {
-	return __awaiter(this, void 0, void 0, function* () {
-		const command = core.getInput('wait-on')
-		;(0, debug_1.default)(`wait: input command : ${command}`)
+		const command = core.getInput('command')
+		;(0, debug_1.default)(`run: input command : ${command}`)
 		if (!command) {
 			return
 		}
-		const waitOnTimeout = core.getInput('wait-on-timeout') || '60'
-		const timeoutSeconds = parseFloat(waitOnTimeout)
-		if (isUrl(command)) {
-			return waitOnUrl(command, timeoutSeconds)
-		}
-		;(0, debug_1.default)(`wait: Waiting using command "${command}"`)
-		return (0, execCommand_1.default)(command, true)
+		const separateCommands = command
+			.split(/,|\n/)
+			.map((s) => s.trim())
+			.filter(Boolean)
+		;(0,
+		debug_1.default)(`run: Separated ${separateCommands.length} main commands ${separateCommands.join(', ')}`)
+		return Promise.all(
+			separateCommands.map((command) =>
+				__awaiter(this, void 0, void 0, function* () {
+					return (0, execCommand_1.default)(command, true)
+				})
+			)
+		)
 	})
 }
-exports.default = wait
+exports.default = run

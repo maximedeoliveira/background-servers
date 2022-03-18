@@ -1,9 +1,48 @@
-export async function wait(milliseconds: number): Promise<string> {
-	return new Promise((resolve) => {
-		if (isNaN(milliseconds)) {
-			throw new Error('milliseconds not a number')
-		}
+import execCommand from './execCommand'
+import ping from './utils/ping'
+import debug from './utils/debug'
+import * as core from '@actions/core'
 
-		setTimeout(() => resolve('done!'), milliseconds)
-	})
+const isUrl = (s: string) => /^https?:\/\//.test(s)
+
+async function waitOnUrl(url: string, waitOnTimeout = 60): Promise<void> {
+	debug(`wait: waiting on "${url}" with timeout of ${waitOnTimeout} seconds`)
+
+	const waitTimeoutMs = waitOnTimeout * 1000
+
+	const waitUrls = url
+		.split(',')
+		.map((s: string) => s.trim())
+		.filter(Boolean)
+	debug(`wait: Waiting for urls ${waitUrls.join(', ')}`)
+
+	// run every wait promise after the previous has finished
+	// to avoid "noise" of debug messages
+	return waitUrls.reduce((prevPromise, url) => {
+		return prevPromise.then(() => {
+			debug(`wait: Waiting for url ${url}`)
+			return ping(url, waitTimeoutMs)
+		})
+	}, Promise.resolve())
+}
+
+export default async function wait(): Promise<void> {
+	const command = core.getInput('wait-on')
+
+	debug(`wait: input command : ${command}`)
+
+	if (!command) {
+		return
+	}
+
+	const waitOnTimeout = core.getInput('wait-on-timeout') || '60'
+	const timeoutSeconds = parseFloat(waitOnTimeout)
+
+	if (isUrl(command)) {
+		return waitOnUrl(command, timeoutSeconds)
+	}
+
+	debug(`wait: Waiting using command "${command}"`)
+
+	return execCommand(command, true)
 }

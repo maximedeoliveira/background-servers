@@ -1,13 +1,29 @@
 name: 'BackgroundServers'
 description: 'A github action run apps in background.'
 inputs:
-    who-to-greet:  # id of input
-        description: 'Who to greet'
+    debug:
+        description: 'Output debug logs'
+        required: false
+        default: 'false'
+    command:
+        description: 'Main command to run'
         required: true
-        default: 'World'
-outputs:
-    time: # id of output
-        description: 'The time we greeted you'
+    build:
+        description: 'Command to run in build step before starting main command'
+        required: false
+        default: ''
+    start:
+        description: 'Command for starting local server in the background'
+        required: false
+        default: ''
+    wait-on:
+        description: 'Local server URL to wait for'
+        required: false
+        default: ''
+    wait-on-timeout:
+        description: 'Amount of time to wait for wait-on url to be available'
+        required: false
+        default: ''
 runs:
-    using: 'node16'
+    using: 'node12'
     main: 'dist/index.js'
