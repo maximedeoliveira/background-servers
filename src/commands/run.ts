@@ -1,5 +1,5 @@
 import execCommand from './execCommand'
-import debug from './utils/debug'
+import debug from '../utils/debug'
 import * as core from '@actions/core'
 
 export default async function run(): Promise<void | any[]> {

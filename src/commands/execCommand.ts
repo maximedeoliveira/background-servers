@@ -1,7 +1,7 @@
 const cliParser = require('argument-vector')()
 const io = require('@actions/io')
 const exec = require('@actions/exec')
-import debug from './utils/debug'
+import debug from '../utils/debug'
 
 export default async function execCommand(
 	command: string,

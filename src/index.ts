@@ -1,8 +1,8 @@
 import * as core from '@actions/core'
-import build from './build'
-import run from './run'
-import start from './start'
-import wait from './wait'
+import build from './commands/build'
+import run from './commands/run'
+import start from './commands/start'
+import wait from './commands/wait'
 
 build()
 	.then(start)

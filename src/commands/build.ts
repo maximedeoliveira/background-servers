@@ -1,4 +1,4 @@
-import debug from './utils/debug'
+import debug from '../utils/debug'
 import execCommand from './execCommand'
 import * as core from '@actions/core'
 

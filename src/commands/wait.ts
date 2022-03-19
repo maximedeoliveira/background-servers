@@ -1,6 +1,6 @@
 import execCommand from './execCommand'
-import ping from './utils/ping'
-import debug from './utils/debug'
+import ping from '../utils/ping'
+import debug from '../utils/debug'
 import * as core from '@actions/core'
 
 const isUrl = (s: string) => /^https?:\/\//.test(s)
