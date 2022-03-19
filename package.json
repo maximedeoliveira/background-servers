@@ -7,7 +7,7 @@
 		"format": "prettier --write '**/*.ts'",
 		"format-check": "prettier --check '**/*.ts'",
 		"lint": "eslint src/**/*.ts",
-		"build": "ncc build --source-map --license licenses.txt",
+		"build": "ncc build src/index.ts --source-map --license licenses.txt",
 		"all": "pnpm run format && pnpm run build",
 		"prepare": "husky install"
 	},
