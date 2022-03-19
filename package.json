@@ -2,14 +2,13 @@
 	"name": "background-servers",
 	"version": "0.0.1",
 	"description": "",
-	"main": "src/index.ts",
+	"main": "dist/index.js",
 	"scripts": {
-		"build": "tsc",
 		"format": "prettier --write '**/*.ts'",
 		"format-check": "prettier --check '**/*.ts'",
 		"lint": "eslint src/**/*.ts",
-		"package": "ncc build --source-map --license licenses.txt",
-		"all": "npm run build && npm run format && npm run package",
+		"build": "ncc build --source-map --license licenses.txt",
+		"all": "pnpm run format && pnpm run build",
 		"prepare": "husky install"
 	},
 	"repository": {
