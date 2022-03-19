@@ -24,7 +24,7 @@ jobs:
                   node-version: 16.x
 
             - name: Install pnpm
-              uses: pnpm/action-setup@latest
+              uses: pnpm/action-setup@v2.2.1
               with:
                   version: latest
 
