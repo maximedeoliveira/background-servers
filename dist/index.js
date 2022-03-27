@@ -4103,7 +4103,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(31));
 function debug(str) {
     if (core.getInput('debug') === 'true') {
-        core.debug(str);
+        console.log(str);
     }
 }
 exports["default"] = debug;
