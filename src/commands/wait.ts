@@ -38,11 +38,13 @@ export default async function wait(): Promise<void> {
 	const waitOnTimeout = core.getInput('wait-on-timeout') || '60'
 	const timeoutSeconds = parseFloat(waitOnTimeout)
 
+	debug(`wait: Waiting during "${timeoutSeconds}" seconds`)
+
 	if (isUrl(command)) {
-		return waitOnUrl(command, timeoutSeconds)
+		return await waitOnUrl(command, timeoutSeconds)
 	}
 
 	debug(`wait: Waiting using command "${command}"`)
 
-	return execCommand(command, true)
+	return await execCommand(command, true)
 }
