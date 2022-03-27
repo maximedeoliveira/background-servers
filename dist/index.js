@@ -4011,9 +4011,9 @@ function start() {
             .map((s) => s.trim())
             .filter(Boolean);
         (0, debug_1.default)(`start: Separated ${separateStartCommands.length} start commands ${separateStartCommands.join(', ')}`);
-        return yield Promise.all(separateStartCommands.map((startCommand) => {
-            return (0, execCommand_1.default)(startCommand, false);
-        }));
+        return yield Promise.all(separateStartCommands.map((startCommand) => __awaiter(this, void 0, void 0, function* () {
+            return yield (0, execCommand_1.default)(startCommand, false);
+        })));
     });
 }
 exports["default"] = start;
