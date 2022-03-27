@@ -3,7 +3,7 @@ import ping from '../utils/ping'
 import debug from '../utils/debug'
 import * as core from '@actions/core'
 
-const isUrl = (s: string) => /^https?:\/\//.test(s)
+const isUrl = (s: string) => /^http[s]?:\/\//.test(s)
 
 async function waitOnUrl(url: string, waitOnTimeout = 60): Promise<void> {
 	debug(`wait: waiting on "${url}" with timeout of ${waitOnTimeout} seconds`)

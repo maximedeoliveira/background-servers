@@ -23,8 +23,8 @@ export default async function start(): Promise<void | void[]> {
 	)
 
 	return await Promise.all(
-		separateStartCommands.map((startCommand: string) => {
-			return execCommand(startCommand, false)
+		separateStartCommands.map(async (startCommand: string) => {
+			return await execCommand(startCommand, false)
 		})
 	)
 }
